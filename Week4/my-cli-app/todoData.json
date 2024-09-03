@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "text": "Manik Maity",
+    "time": "3/9/2024, 9:10:19 am",
+    "isCompleted": false
+  },
+  {
+    "id": 2,
+    "text": "Hello everyone!",
+    "time": "3/9/2024, 9:12:44 am",
+    "isCompleted": false
+  },
+  {
+    "id": 3,
+    "text": "HI there ",
+    "time": "3/9/2024, 10:12:01 am",
+    "isCompleted": false
+  },
+  {
+    "id": 5,
+    "text": "I am not sure",
+    "time": "3/9/2024, 10:12:22 am",
+    "isCompleted": false
+  }
+]
