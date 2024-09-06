@@ -1,0 +1,45 @@
+[
+  {
+    "username": "manik",
+    "todos": [
+      {
+        "id": 123,
+        "todoText": "Todo1",
+        "isCompleted": false
+      },
+      {
+        "id": 454,
+        "todoText": "Todo2",
+        "isCompleted": false
+      },
+      {
+        "id": 19,
+        "todoText": "Todo3",
+        "isCompleted": true
+      },
+      {
+        "id": 51,
+        "todoText": "Todo4",
+        "isCompleted": false
+      },
+      {
+        "id": 752409,
+        "text": "Go to college ",
+        "time": "6/9/2024, 9:59:52 am",
+        "isCompleted": false
+      },
+      {
+        "id": 672682,
+        "text": "driving exam",
+        "time": "6/9/2024, 10:01:19 am",
+        "isCompleted": false
+      },
+      {
+        "id": 583926,
+        "text": "hey how are you",
+        "time": "6/9/2024, 10:04:31 am",
+        "isCompleted": false
+      }
+    ]
+  }
+]
