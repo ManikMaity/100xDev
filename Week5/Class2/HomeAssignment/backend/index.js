@@ -1,9 +1,10 @@
 const express = require("express");
-const {addTaskToDB, getAllTasks, deleteTask} = require("./db/index")
+const cors = require("cors");
+const {addTaskToDB, getAllTasks, deleteTask, editTask, markTaskCompleted} = require("./db/index")
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3100;
 app.use(express.json());
-
+app.use(cors())
 
 app.get("/", (req, res) => {
     res.json({
@@ -18,10 +19,8 @@ app.post("/add", (req, res) => {
             "msg" : "task text not given"
         })
     }
-    addTaskToDB(taskText);
-    res.json({
-        "msg" : "Task Added"
-    })
+    const updatedTasks = addTaskToDB(taskText);
+    res.json(updatedTasks);
 });
 
 
@@ -38,10 +37,32 @@ app.get("/allTasks", (req, res) => {
 })
 
 app.put("/edit", (req, res) => {
-    const taskId = req.body.id;
-    const text = req.body.text;
+    try{
+        const taskId = req.body.id;
+        const text = req.body.text;
+        const a = editTask(Number(taskId), text);
+        res.json(a);
+    }
+    catch(err) {
+        res.status(404).json({
+            "msg" : err.message
+        })
+    }
     
-    
+})
+
+
+app.put("/mark/:id", (req, res) => {
+    try{
+        const taskId = req.params.id;
+        const updatedTasks = markTaskCompleted(taskId);
+        res.json(updatedTasks);
+    }
+    catch(err) {
+        res.status(404).json({
+            "msg" : err.message
+        })
+    }
 })
 
 

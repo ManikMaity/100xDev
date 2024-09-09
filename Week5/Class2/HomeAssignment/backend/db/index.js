@@ -18,7 +18,7 @@ function addTaskToDB(taskname) {
             allTaskObj.push(taskObj);
             const jsonTaskObj = JSON.stringify(allTaskObj, null, 3);
             fs.writeFileSync("./db/db.json", jsonTaskObj);
-            console.log("Task Added");
+            return allTaskObj;
         }
     })
 }
@@ -44,15 +44,33 @@ function deleteTask (id){
 }
 
 
-function editTask (id, newText) {
-    if (newText.trim() == "") return;
-    
+function editTask (taskId, newText) {
+    if (newText.trim() == "") throw new Error("Task text is empty");
+    const allTasks = getAllTasks();
+    const taskToBeEdited = allTasks.find(task => task.id == taskId);
+    if (taskToBeEdited == undefined) throw new Error("Task to be edited not found");
+    taskToBeEdited.task = newText;
+    taskToBeEdited.time = new Date().toLocaleString();
+    fs.writeFileSync("./db/db.json", JSON.stringify(allTasks, null, 3));
+    return allTasks;
+}
+
+
+function markTaskCompleted(taskId){
+    const allTasks = getAllTasks();
+    const taskToBeMarked = allTasks.find(task => task.id == taskId);
+    if (taskToBeMarked == undefined) throw new Error("Task to be edited not found");
+    taskToBeMarked.isComplete = !taskToBeMarked.isComplete;
+    fs.writeFileSync("./db/db.json", JSON.stringify(allTasks, null, 3));
+    return allTasks;
 }
 
 module.exports = {
     addTaskToDB,
     getAllTasks,
-    deleteTask
+    deleteTask,
+    editTask,
+    markTaskCompleted,
 };
 
 
