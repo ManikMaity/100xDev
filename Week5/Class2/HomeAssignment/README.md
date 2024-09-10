@@ -1,31 +1,36 @@
 # Taskify
 
-Create a Full-Stack Task Management Application.
+A simple task management application with a Node.js, Express and JS frontend.
 
-### Note: Try to do it by yourself.
+**Features**
+------------
 
-### Setup Guide
+*   Create, read, update, and delete tasks
+*   Mark tasks as completed
+*   Used Json Database to store tasks
+*   Created Express API to manage tasks
 
-#### Backend Setup
-1. go inside week-5/backend and run:
+**Quick Start**
+---------------
 
-```
- npm install 
-```
+### Backend
 
-2. copy .env.example to .env.
-```
-cp .env.example .env
-```
+1.  Navigate to the `backend` directory.
+2.  Install the dependencies with `npm install`.
+3.  Start the server with `npm run dev`.
 
-3. run the server.
-```
-npm run dev
-```
-start building.
+### Frontend
 
-#### Frontend Setup
+1.  Navigate to the `frontend` directory.
+3.  Start the application with `npx serve`.
 
-- go inside week-5/frontend and run:
+**Technology Stack**
+--------------------
 
-start building.
+*   **Backend:** Node.js, Express
+*   **Frontend:** HTML, CSS, JS
+
+**Author**
+------
+
+Manik Maity
