@@ -1,10 +1,13 @@
 const express = require("express");
 const { v4: uuidv4 } = require('uuid');
-
+const JWT = require("jsonwebtoken");
 const app = express();
 
 // express.json() middleware is used to parse JSON data from the request body.
 app.use(express.json());
+
+
+const JWT_SECRET = "manikmaity";
 
 const users = []; // we will store the users data in this array.
 
@@ -18,7 +21,9 @@ app.get("/me", (req, res) => {
     // user send their token in the header.
     // athentication data is stored in the header.
     const token = req.headers.token;
-    const foundUser = users.find(user => user.token == token);
+    const decodedInfo = JWT.verify(token, JWT_SECRET); // this will return a json object
+    const username = decodedInfo.username;
+    const foundUser = users.find(user => user.username == username);
     if (foundUser !== undefined) res.json({name : foundUser.username, password : foundUser.password});
     else {
         res.status(404).json({
@@ -33,8 +38,10 @@ app.post("/signin", (req, res) => {
     const foundUser = users.find(user => (user.username == username && user.password == `${password}`));
     if (foundUser == undefined) res.status(404).json({msg : "You dont have a account"});
     else {
-        const token = uuidv4();
-        foundUser.token = token;
+        const token = JWT.sign({
+            username : username
+        }, JWT_SECRET);
+        // foundUser.token = token;
         console.log(users);
         res.json({token});
     }

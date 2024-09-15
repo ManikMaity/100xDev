@@ -19,6 +19,9 @@ const users = [];
 // We can modify the request object in this middleware.
 function auth(req, res, next) {
     const token = req.headers.token;
+    if (!token){
+        res.json({msg : "Token not provided"})
+    }
     const decodedInfo = JWT.verify(token, JWT_SECRET);
     const username = decodedInfo.username;
     const found = users.find(user => user.username == username);
@@ -30,9 +33,7 @@ function auth(req, res, next) {
 }
 
 app.get("/", (req, res) => {
-    res.json({
-        msg : "Working"
-    })
+    res.sendFile(__dirname + "/index.html");
 });
 
 app.get("/me", auth, (req, res) => {

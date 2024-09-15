@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <div style="margin-bottom: 10px">
+      <p>Signup</p>
+      <label for="username">Username :</label>
+      <input type="text" name="username" id="signup-username" />
+      <label for="pass">Password :</label>
+      <input type="text" name="pass" id="signup-pass" />
+      <button id="signup-btn">Sign Up</button>
+    </div>
+
+    <div>
+      <p>Signin</p>
+      <label for="username">Username</label>
+      <input type="text" name="username" id="signin-username" />
+      <label for="pass">Password :</label>
+      <input type="text" name="pass" id="signin-pass" />
+      <button id="signin-btn">Sign In</button>
+    </div>
+
+    <div>
+      <p>User: <span id="user-name"></span></p>
+      <p>Password <span id="user-password"></span></p>
+    </div>
+
+    <button id="">Logout</button>
+
+    <script>
+      const btnEle = document.getElementById("signup-btn");
+      btnEle.addEventListener("click", signup);
+        
+      const signinBtn = document.getElementById("signin-btn")
+      signinBtn.addEventListener("click", signin)
+
+      async function getUserInfo(){
+        const token = await localStorage.getItem("token") || null;
+        if (token == null){
+          console.log("You are not signed in");
+          return;
+        }
+        const data = await axios.get("http://localhost:3000/me", {
+          headers : {
+            token : token
+          }
+        });
+
+        document.getElementById("user-name").textContent = data.data.name;
+        document.getElementById("user-password").textContent = data.data.pass;
+
+      }
+
+      getUserInfo();
+
+      async function signup() {
+        const usernameELe = document.getElementById("signup-username");
+        const passELe = document.getElementById("signup-pass");
+        const username = usernameELe.value;
+        const pass = passELe.value;
+        console.log("Hi");
+        try {
+          const data = await axios.post("http://localhost:3000/signup", {
+            username: username,
+            password: pass,
+          });
+        } catch (err) {
+          console.log(err);
+        }
+      }
+
+      async function signin(){
+        const signinUsernameEle = document.getElementById("signin-username");
+        const signinPassEle = document.getElementById("signin-pass");
+        const username = signinUsernameEle.value;
+        const password = signinPassEle.value;
+        const data = await axios.post("http://localhost:3000/signin", {
+            username,
+            password
+        });
+        localStorage.setItem("token", data.data.token);
+      }
+
+
+    </script>
+  </body>
+</html>
