@@ -33,3 +33,12 @@ body{
     padding: 15px;
     border-radius: 5px;
 }
+
+.hidden{
+    display: none;
+}
+
+.new-user{
+    display: flex;
+    gap: 10px;
+}

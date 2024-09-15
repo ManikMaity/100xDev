@@ -9,41 +9,45 @@
     <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
   </head>
   <body>
-    <div class="container signup">
-      <h4 style="text-align: center; margin-bottom: 10px">Signup</h4>
-      <div>
-        <label for="username">Username :</label>
-        <input type="text" name="username" id="signup-username" />
+    <div class="new-user">
+      <div class="container signup">
+        <h4 style="text-align: center; margin-bottom: 10px">Signup</h4>
+        <div>
+          <label for="username">Username :</label>
+          <input type="text" name="username" id="signup-username" />
+        </div>
+
+        <div>
+          <label for="password">Password :</label>
+          <input type="text" name="password" id="signup-password" />
+        </div>
+
+        <button id="sign-up">Sign Up</button>
       </div>
 
-      <div>
-        <label for="password">Password :</label>
-        <input type="text" name="password" id="signup-password" />
-      </div>
+      <div class="container signin">
+        <h4 style="text-align: center; margin-bottom: 10px">Signin</h4>
+        <div>
+          <label for="username">Username :</label>
+          <input type="text" name="username" id="signin-username" />
+        </div>
 
-      <button id="sign-up">Sign Up</button>
+        <div>
+          <label for="password">Password :</label>
+          <input type="text" name="password" id="signin-password" />
+        </div>
+
+        <button id="sign-in">Sign In</button>
+      </div>
     </div>
 
-    <div class="container signin">
-      <h4 style="text-align: center; margin-bottom: 10px">Signin</h4>
-      <div>
-        <label for="username">Username :</label>
-        <input type="text" name="username" id="signin-username" />
+    <div class="old-user">
+      <div class="container logedIn">
+        <h4 style="text-align: center; margin-bottom: 10px">User Detail</h4>
+        <p>Username : <b id="username-logedIn"></b></p>
+        <p>Password : <b id="password-logedIn"></b></p>
+        <button id="logout-btn">Logout</button>
       </div>
-
-      <div>
-        <label for="password">Password :</label>
-        <input type="text" name="password" id="signin-password" />
-      </div>
-
-      <button id="sign-in">Sign In</button>
-    </div>
-
-    <div class="container logedIn">
-      <h4 style="text-align: center; margin-bottom: 10px">User Detail</h4>
-      <p>Username : <b id="username-logedIn"></b></p>
-      <p>Password : <b id="password-logedIn"></b></p>
-      <button id="logout-btn">Logout</button>
     </div>
 
     <script src="./script.js"></script>
