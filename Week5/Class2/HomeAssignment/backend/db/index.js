@@ -29,6 +29,17 @@ function getAllTasks (){
     return JSON.parse(allTasks);
 }
 
+function getAllUsers (){
+    const users = fs.readFileSync("./db/users.json");
+    return JSON.parse(users);
+}
+
+function addNewUser(username, password){
+    const users = getAllUsers();
+    users.push({username, password});
+    const updatedUserJson = JSON.stringify(users, null, 3);
+    fs.writeFileSync("./db/users.json", updatedUserJson);
+}
 
 function deleteTask (id){
     try{
@@ -65,12 +76,15 @@ function markTaskCompleted(taskId){
     return allTasks;
 }
 
+
 module.exports = {
     addTaskToDB,
     getAllTasks,
     deleteTask,
     editTask,
     markTaskCompleted,
+    getAllUsers,
+    addNewUser
 };
 
 

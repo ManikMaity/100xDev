@@ -1,16 +1,77 @@
 const express = require("express");
 const cors = require("cors");
-const {addTaskToDB, getAllTasks, deleteTask, editTask, markTaskCompleted} = require("./db/index")
+const JWT = require("jsonwebtoken");
+
+const {addTaskToDB, getAllTasks, deleteTask, editTask, markTaskCompleted, getAllUsers, addNewUser} = require("./db/index");
+const { auth } = require("./middleware/auth");
 const app = express();
 const port = process.env.PORT || 3100;
 app.use(express.json());
-app.use(cors())
+app.use(cors());
+
+const JWT_SECRECT = "helloworld";
+
 
 app.get("/", (req, res) => {
-    res.json({
-        "msg" : "Working" ,
-    })
+    res.send("Hello World!");
+});
+
+app.get("/me", auth, (req, res) => {
+    try{
+        const username = req.username;
+        const users = getAllUsers();
+        const user = users.find(user => user.username == username);
+        res.json(user);  
+    }
+    catch (err){
+        res.status(404).json
+    }
 })
+
+
+app.post("/signin", (req, res) => {
+    try{
+        const username = req.body.username;
+        const password = req.body.password;
+        const allUsers = getAllUsers();
+        const findUser = allUsers.find(user => (user.username == username && user.password == password));
+        if (findUser){
+            const token = JWT.sign({
+                username: username
+            }, JWT_SECRECT);
+            res.json({token});
+        }
+        else{
+            res.status(404).json({msg : "User doesnt exits"});
+        }
+
+    }
+    catch(err){
+        res.json({msg : err})
+    }
+})
+
+
+app.post("/signup", (req, res) => {
+    try{
+        const username = req.body.username;
+        const password = req.body.password;
+        const allUsers = getAllUsers();
+        const foundUser = allUsers.findIndex(user => user.username == username);
+        if (foundUser == -1){
+            addNewUser(username, password);
+            res.json({msg : "User added to database"});
+        }
+        else {
+            res.status(404).json({msg : "User already exit"});
+        }
+    }
+    catch(err){
+        res.status(404).json(err)
+    }
+    
+})
+
 
 app.post("/add", (req, res) => {
     const taskText = req.body.task;

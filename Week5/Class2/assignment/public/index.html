@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <!-- cdn  -->
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+    <style>
+        body{
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            height: 100vh;
+            background-color: #252525;
+        }
+        input, button{
+            padding: 10px;
+            width: 100px;
+        }
+    </style>
+
+</head>
+<body>
+    <h1>Calculator</h1>
+    <input type="text" id="result" value="0" disabled>
+    <input type="number" min="0" value="0" id="a">
+    <input type="number" min="0" value="0" id ="b">
+    <button id="add">+</button>
+    <script src="./index.js"></script>
+</body>
+</html>

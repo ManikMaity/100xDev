@@ -7,3 +7,13 @@
 body{
   background-color: #101010;
 }
+
+.user-account{
+  display: flex;
+  max-width: 100px;
+  align-items: center;
+  width: fit-content;
+  gap: 10px;
+  padding: 10px;
+  border: 2px solid #252525;
+}
