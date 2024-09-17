@@ -4,6 +4,8 @@ const taskInputEle = document.getElementById("taskInput");
 const taskInputBtn = document.getElementById("taskInputBtn");
 const signupContainerEle = document.querySelector(".signup-container");
 const todoMainContianerEle = document.querySelector(".todo-main-container");
+const signinBtnEle= document.querySelector(".signin-btn");
+const signupBtnEle = document.querySelector(".signup-btn");
 const isSignedIn = false;
 
 
@@ -25,6 +27,7 @@ async function getUserData (){
 
 getUserData();
 showScreen();
+
 function showScreen (){
     if (isSignedIn){
         signupContainerEle.style.display = "none";
@@ -36,6 +39,65 @@ function showScreen (){
     }
 }
 
+
+async function signup (e){
+    const usernameEle = document.getElementById("signup-username-form");
+    const passwordEle = document.getElementById("signup-password");
+    const username = usernameEle.value;
+    const password = passwordEle.value;
+    if (username.trim() == "" || password.trim() == ""){
+        alert("Please enter proper value");
+        return;
+    }
+    else {
+        try{
+            e.target.textContent = "Loading.."
+            const addUser = await axios.post("http://localhost:3100/signup", {
+                username,
+                password
+            })
+            alert(addUser.data.msg);
+        }
+        catch(err){
+            alert(err.response.data.msg);
+        }
+        finally{
+            e.target.textContent = "Signup";
+            usernameEle.value = "";
+            passwordEle.value = "";
+        }
+    }
+}
+
+async function signin(e) {
+    const usernameEle = document.getElementById("signin-username-form");
+    const passwordEle = document.getElementById("signin-password");
+    const username = usernameEle.value;
+    const password = passwordEle.value;
+    if (username.trim() == "" || password.trim() == ""){
+        alert("Please enter proper value");
+        return;
+    }
+    else {
+        try{
+            e.target.textContent = "Loading.."
+            const signinMessage = await axios.post("http://localhost:3100/signin", {
+                username,
+                password
+            })
+            alert("You are signed in");
+            console.log(signinMessage.data.token);
+        }
+        catch(err){
+            alert(err.response.data.msg);
+        }
+        finally{
+            e.target.textContent = "Signin";
+            usernameEle.value = "";
+            passwordEle.value = "";
+        }
+    }
+}
 
 
 async function getAllTasks() {
@@ -137,6 +199,15 @@ taskInputBtn.addEventListener("click", async(e) => {
     taskInputEle.value = "";
 })
 
+signupBtnEle.addEventListener("click", (e) => {
+    e.preventDefault();
+    signup(e);
+})
+
+signinBtnEle.addEventListener("click", (e) => {
+    e.preventDefault();
+    signin(e);
+})
 
 
 renderAllTasks();
