@@ -2,6 +2,41 @@ const taskContainerEle = document.querySelector(".tasks-container");
 const spinnerEle = document.querySelector(".spinner-ele");
 const taskInputEle = document.getElementById("taskInput");
 const taskInputBtn = document.getElementById("taskInputBtn");
+const signupContainerEle = document.querySelector(".signup-container");
+const todoMainContianerEle = document.querySelector(".todo-main-container");
+const isSignedIn = false;
+
+
+async function getUserData (){
+    const token = localStorage.getItem("token");
+    const userData = await axios.get("http://localhost:3100/me", {
+        headers : {
+            token 
+        }
+    })
+    if (userData.status == 200){
+        isSignedIn = true;
+        console.log(userData.data);
+    }
+    else {
+        isSignedIn = false;
+    }
+}
+
+getUserData();
+showScreen();
+function showScreen (){
+    if (isSignedIn){
+        signupContainerEle.style.display = "none";
+        todoMainContianerEle.style.display = "auto";
+    }
+    else {
+        signupContainerEle.style.display = "flex";
+        todoMainContianerEle.style.display = "none";
+    }
+}
+
+
 
 async function getAllTasks() {
     const tasks = await axios.get("http://localhost:3100/allTasks");
@@ -91,7 +126,6 @@ function handleEdit(id, e){
     })
 
 }
-
 
 taskInputBtn.addEventListener("click", async(e) => {
     e.preventDefault();

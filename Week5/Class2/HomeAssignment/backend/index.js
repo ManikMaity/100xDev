@@ -1,7 +1,6 @@
 const express = require("express");
 const cors = require("cors");
 const JWT = require("jsonwebtoken");
-
 const {addTaskToDB, getAllTasks, deleteTask, editTask, markTaskCompleted, getAllUsers, addNewUser} = require("./db/index");
 const { auth } = require("./middleware/auth");
 const app = express();
@@ -10,7 +9,6 @@ app.use(express.json());
 app.use(cors());
 
 const JWT_SECRECT = "helloworld";
-
 
 app.get("/", (req, res) => {
     res.send("Hello World!");
@@ -24,10 +22,9 @@ app.get("/me", auth, (req, res) => {
         res.json(user);  
     }
     catch (err){
-        res.status(404).json
+        res.status(404).json({msg : err});
     }
 })
-
 
 app.post("/signin", (req, res) => {
     try{
@@ -51,7 +48,6 @@ app.post("/signin", (req, res) => {
     }
 })
 
-
 app.post("/signup", (req, res) => {
     try{
         const username = req.body.username;
@@ -72,7 +68,6 @@ app.post("/signup", (req, res) => {
     
 })
 
-
 app.post("/add", (req, res) => {
     const taskText = req.body.task;
     if (taskText == undefined) {
@@ -83,7 +78,6 @@ app.post("/add", (req, res) => {
     const updatedTasks = addTaskToDB(taskText);
     res.json(updatedTasks);
 });
-
 
 app.get("/allTasks", (req, res) => {
     try{
@@ -112,7 +106,6 @@ app.put("/edit", (req, res) => {
     
 })
 
-
 app.put("/mark/:id", (req, res) => {
     try{
         const taskId = req.params.id;
@@ -125,7 +118,6 @@ app.put("/mark/:id", (req, res) => {
         })
     }
 })
-
 
 app.delete("/delete/:id", (req, res) => {
     const taskId = req.params.id;
