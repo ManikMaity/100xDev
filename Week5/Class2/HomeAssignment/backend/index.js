@@ -68,7 +68,7 @@ app.post("/signup", (req, res) => {
     
 })
 
-app.post("/add", (req, res) => {
+app.post("/add", auth, (req, res) => {
     const taskText = req.body.task;
     if (taskText == undefined) {
         res.status(404).json({
@@ -79,7 +79,7 @@ app.post("/add", (req, res) => {
     res.json(updatedTasks);
 });
 
-app.get("/allTasks", (req, res) => {
+app.get("/allTasks", auth, (req, res) => {
     try{
         const tasks = getAllTasks();
         res.json(tasks);
@@ -91,7 +91,7 @@ app.get("/allTasks", (req, res) => {
     }
 })
 
-app.put("/edit", (req, res) => {
+app.put("/edit", auth, (req, res) => {
     try{
         const taskId = req.body.id;
         const text = req.body.text;
@@ -106,7 +106,7 @@ app.put("/edit", (req, res) => {
     
 })
 
-app.put("/mark/:id", (req, res) => {
+app.put("/mark/:id", auth, (req, res) => {
     try{
         const taskId = req.params.id;
         const updatedTasks = markTaskCompleted(taskId);
@@ -119,7 +119,7 @@ app.put("/mark/:id", (req, res) => {
     }
 })
 
-app.delete("/delete/:id", (req, res) => {
+app.delete("/delete/:id", auth, (req, res) => {
     const taskId = req.params.id;
     if (!Number(taskId)) res.status(404).json({"msg" : "Not a valid task id"});
     const filteredTask = deleteTask(Number(taskId));

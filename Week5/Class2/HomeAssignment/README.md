@@ -1,6 +1,6 @@
 # Taskify
 
-A simple task management application with a Node.js, Express and JS frontend.
+A simple task management application with a Node.js, Express and JS frontend with authentication.
 
 **Features**
 ------------
@@ -9,6 +9,17 @@ A simple task management application with a Node.js, Express and JS frontend.
 *   Mark tasks as completed
 *   Used Json Database to store tasks
 *   Created Express API to manage tasks
+*   Signup, signin and logout functionality
+*   Authentication.
+*   Used json file to store user data
+
+**Preview**
+------------
+- Home Page 
+![](./images/signup-page.png)
+- Signup & Login Page
+![](./images/app-page.png)
+
 
 **Quick Start**
 ---------------
@@ -27,8 +38,8 @@ A simple task management application with a Node.js, Express and JS frontend.
 **Technology Stack**
 --------------------
 
-*   **Backend:** Node.js, Express
-*   **Frontend:** HTML, CSS, JS
+*   **Backend:** Node.js, Express, JWT
+*   **Frontend:** HTML, CSS, JS, Axios
 
 **Author**
 ------
