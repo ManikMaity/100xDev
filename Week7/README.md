@@ -20,3 +20,33 @@ Frondend ---> Backend ---> Database
 - NoSql databases store data in key-value pairs.
 - In nested data structure no-sql databases is used. UserData Obj --> Video -> All video -> video page and video description
 - Schema means structure of data.
+
+
+- Create a mongodb instance
+- connect to the moongo db instance using mongodb compass.
+- After that create a database by clicking on thr plus icon of clustur name and then create a collection.
+- After creating the database we can create multiple collections by clicking on plus icon of the  database.
+- We can manualy incert data in the collection by add data -> insert document -> id is auto created.
+- We will write something like this:
+```json
+{
+  "_id": {
+    "$oid": "66ec6be219abb8e5aa830203"
+  },
+  "username": "manik123",
+  "password": "123",
+  "name": "Manik Maity"
+}
+```
+- This is how it will look like in mongodb.
+```
+
+_id
+66ec6be219abb8e5aa830203
+username
+"manik123"
+password
+"123"
+name
+"Manik Maity"
+```
