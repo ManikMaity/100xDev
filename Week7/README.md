@@ -2,10 +2,10 @@
 
 ## Index
 - Databases
-- NoSql Databases 
-- Mongodb 
+- NoSql Databases
+- Mongodb
 - Mongose
-- CRUD Operations using mongose 
+- CRUD Operations using mongose
 
 ## Databases
 - Databses are static irespect of the backend language or framework like java , python, nodejs etc.
@@ -37,16 +37,4 @@ Frondend ---> Backend ---> Database
   "password": "123",
   "name": "Manik Maity"
 }
-```
-- This is how it will look like in mongodb.
-```
-
-_id
-66ec6be219abb8e5aa830203
-username
-"manik123"
-password
-"123"
-name
-"Manik Maity"
 ```
