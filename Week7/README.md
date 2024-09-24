@@ -38,3 +38,53 @@ Frondend ---> Backend ---> Database
   "name": "Manik Maity"
 }
 ```
+
+## db.js
+```js
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+const ObjectId = mongoose.ObjectId;
+
+
+mongoose.connect('mongodb+srv://manikmaityhaker2003:w0K2cWAQAnjTreKl@cluster0.bajhd.mongodb.net/todo-app-database');
+
+
+const User = {
+    username : String,
+    password : String,
+    salt : String,
+    name : String
+}
+
+const Todo = {
+    des : String,
+    done : Boolean,
+    userId : ObjectId
+}
+
+const UserModel = mongoose.model("users", User);
+const TodoModel = mongoose.model("todos", Todo);
+
+module.exports = {UserModel, TodoModel};
+```
+
+## index.js
+
+```js
+const { UserModel, TodoModel } = require("./db");
+// To create user
+
+ await UserModel.create({
+      username,
+      password : bcrypt.hashSync(password, salt),
+      salt,
+      name
+    });
+
+// Find user
+  const user = await UserModel.findOne({
+    username,
+    password,
+  });
+
+```

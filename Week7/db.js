@@ -3,12 +3,13 @@ const Schema = mongoose.Schema;
 const ObjectId = mongoose.ObjectId;
 
 
-await mongoose.connect('mongodb+srv://manikmaityhaker2003:w0K2cWAQAnjTreKl@cluster0.bajhd.mongodb.net/todo-app-database');
+mongoose.connect('mongodb+srv://manikmaityhaker2003:w0K2cWAQAnjTreKl@cluster0.bajhd.mongodb.net/todo-app-database');
 
 
 const User = {
     username : String,
     password : String,
+    salt : String,
     name : String
 }
 
