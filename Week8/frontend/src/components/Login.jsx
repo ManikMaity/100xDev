@@ -2,7 +2,7 @@
 import axios from 'axios';
 import React from 'react'
 
-const Login = () => {
+const Login = ({setShowRegister}) => {
     // call the functions onClick of button.
     async function handleLogin() {
         const resposne = await axios.post(); // // if you don't know about axios, give it a read https://axios-http.com/docs/intro
@@ -46,7 +46,7 @@ const Login = () => {
           </button>
         </form>
         <p className="mt-4 text-center text-sm text-neutral-content">
-          Don't have an account? <a href="/register" className="text-primary">Register here</a>
+          Don't have an account? <a className="text-primary" onClick={() => setShowRegister(true)}>Register here</a>
         </p>
       </div>
     </div>

@@ -1,4 +1,6 @@
 import React from 'react';
+import Header from './Header';
+import CourseCard from './CourseCard';
 
 // Dummy course data
 const courses = [
@@ -30,26 +32,17 @@ const courses = [
 
 const Courses = () => {
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-base-200 p-4">
-      <h2 className="text-3xl font-bold text-neutral-content mb-6">Available Courses</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {courses.map((course) => (
-          <div key={course.id} className="card bg-base-100 shadow-lg">
-            <figure>
-              <img src={course.imageLink} alt={course.title} className="w-full h-40 object-cover" />
-            </figure>
-            <div className="card-body">
-              <h3 className="text-xl font-bold text-neutral-content">{course.title}</h3>
-              <p className="text-neutral-content">{course.description}</p>
-              <div className="flex justify-between items-center mt-4">
-                <span className="text-lg font-semibold text-primary">Price: ${course.price}</span>
-                <button className="btn btn-primary">Enroll Now</button>
-              </div>
-            </div>
-          </div>
-        ))}
+    <>
+    <div className="flex flex-col items-center h-screen bg-base-200 p-0">
+
+    <Header/>
+
+      <h2 className="text-3xl font-bold text-neutral-content my-6">Available Courses</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mx-3">
+        {courses.map(course => <CourseCard key={course.id} course={course}/>)}
       </div>
     </div>
+    </>
   );
 };
 
