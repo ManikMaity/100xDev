@@ -21,6 +21,12 @@ const User = {
     isAdmin : Boolean
 }
 
+const Admin = {
+    username : String,
+    email : String,
+    password : String,
+}
+
 
 const Course = {
     title : String,
@@ -36,5 +42,6 @@ const Course = {
 // Defining the model
 const UserModel = mongoose.model("users", User);
 const CourseModel = mongoose.model("courses", Course);
+const AdminModel = mongoose.model("admin", Admin);
 
-module.exports = {UserModel, CourseModel};
+module.exports = {UserModel, CourseModel, AdminModel};
