@@ -20,19 +20,18 @@ const requireSignupBody = z.object({
   password: z.string().min(1).max(100),
 });
 
-
 const requireLoginBody = z.object({
   email: z.string().min(1).max(100),
   password: z.string().min(1).max(100),
 });
 
 const requireAddCourseBody = z.object({
-  title : z.string().min(1).max(100),
-  description :  z.string().min(1).max(100),
-  price : z.number().min(1),
-  imageLink : z.string().min(1).max(200),
-  published : z.boolean(),
-})
+  title: z.string().min(1).max(100),
+  description: z.string().min(1).max(100),
+  price: z.number().min(1),
+  imageLink: z.string().min(1).max(200),
+  published: z.boolean(),
+});
 
 // ************************ Middleware ******************************
 
@@ -48,7 +47,7 @@ async function auth(req, res, next) {
       email: decodedData?.email,
     });
     if (user) {
-    req.user = user;
+      req.user = user;
       next();
     } else {
       throw new Error("User not found");
@@ -70,7 +69,7 @@ async function adminAuth(req, res, next) {
       email: decodedData?.email,
     });
     if (admin) {
-    req.admin = admin;
+      req.admin = admin;
       next();
     } else {
       throw new Error("Admin not found");
@@ -146,40 +145,40 @@ app.post("/user/login", async (req, res) => {
 
 // All courses
 app.get("/user/courses", auth, async (req, res) => {
-    try{
-        const allCourses = await CourseModel.find();
-        res.json(allCourses);
-    }
-    catch (err) {
-        console.log(err);
-        res.status(500).json({ error: err.message });
-      }
-
+  try {
+    const allCourses = await CourseModel.find();
+    res.json(allCourses);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: err.message });
+  }
 });
 
 // Purchase a course
 app.post("/user/courses/:courseId", auth, async (req, res) => {
-    try{
-      const courseId = req.params.courseId;
-      const user = req.user;
-      const course = await CourseModel.findByIdAndUpdate(courseId, {$push : {purchasedBy : user._id}});
-      res.json(course);
-    }
-    catch(err){
-      console.log(err);
-      res.status(500).json({ error: err.message });
-    }
+  try {
+    const courseId = req.params.courseId;
+    const user = req.user;
+    const course = await CourseModel.findByIdAndUpdate(courseId, {
+      $push: { purchasedBy: user._id },
+    });
+    res.json(course);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: err.message });
+  }
 });
 
 // All purchase courses
 app.get("/user/purchasedCourses", auth, async (req, res) => {
-  try{
+  try {
     const userId = req.user._id;
     const allCourses = await CourseModel.find();
-    const purchasedCourses = allCourses.filter(course => course.purchasedBy.includes(userId));
+    const purchasedCourses = allCourses.filter((course) =>
+      course.purchasedBy.includes(userId)
+    );
     res.json(purchasedCourses);
-  }
-  catch(err){
+  } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
@@ -251,64 +250,84 @@ app.post("/admin/login", async (req, res) => {
 
 // Create a course
 app.post("/admin/courses/add", adminAuth, async (req, res) => {
-  try{
-    
-  const admin = req.admin;
-  const title = req.body.title;
-  const description = req.body.description;
-  const price = req.body.price;
-  const imageLink = req.body.imageLink;
-  const published = req.body.published;
+  try {
+    const admin = req.admin;
+    const title = req.body.title;
+    const description = req.body.description;
+    const price = req.body.price;
+    const imageLink = req.body.imageLink;
+    const published = req.body.published;
 
-  const inputValidated = requireAddCourseBody.safeParse(req.body);
-  if (!inputValidated.success){
-    throw new Error(`${inputValidated.error.errors[0].message}`);
-  }
+    const inputValidated = requireAddCourseBody.safeParse(req.body);
+    if (!inputValidated.success) {
+      throw new Error(`${inputValidated.error.errors[0].message}`);
+    }
 
-  await CourseModel.create({
-    title,
-    description,
-    price,
-    imageLink,
-    published,
-    publishedBy : admin._id,
-    purchasedBy : []
-  })
+    await CourseModel.create({
+      title,
+      description,
+      price,
+      imageLink,
+      published,
+      publishedBy: admin._id,
+      purchasedBy: [],
+    });
 
-  res.json({msg : "Course created"});
-
-  }
-  catch(err){
+    res.json({ msg: "Course created" });
+  } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-
 // Edit course
-app.put("/admin/courses/:courseId", adminAuth, async(req, res) => {
+app.put("/admin/courses/:courseId", adminAuth, async (req, res) => {
+  try {
+    const admin = req.admin;
+    const courseId = req.params.courseId;
+    const course = await CourseModel.findById(courseId);
 
+    if (!course) {
+      throw new Error("Course not found.");
+    }
+
+    if (admin._id.equals(course.publishedBy) === false) {
+      console.log(course.publishedBy, admin._id);
+      throw new Error("Course isnt published by you");
+    }
+
+    const title = req.body.title || course.title;
+    const description = req.body.description || course.description;
+    const price = req.body.price || course.price;
+    const imageLink = req.body.imageLink || course.imageLink;
+    const published = req.body.published || course.published;
+
+    await CourseModel.findOneAndUpdate(
+      { _id: course._id },
+      { title, description, price, imageLink, published }
+    );
+
+    res.json({ msg: "Course is updated" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 // Get all uploaded courses
-app.get("/admin/courses", adminAuth, async(req, res) => {
-  try{
+app.get("/admin/courses", adminAuth, async (req, res) => {
+  try {
     const adminId = req.admin._id;
     const courses = await CourseModel.find({
-      publishedBy : adminId
+      publishedBy: adminId,
     });
 
-    if (courses){
+    if (courses) {
       res.json(courses);
+    } else {
+      throw new Error("You dont have any cources");
     }
-    else{
-      throw new Error("You dont have any cources"); 
-    }
-
-  }
-  catch(err){
+  } catch (err) {
     res.status(500).json({ error: err.message });
   }
-   
 });
 
 app.listen(3000);
