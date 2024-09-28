@@ -9,7 +9,7 @@ function Signup() {
    
   return (
     <div>
-      {showRegister ? <Register/> : <Login setShowRegister={setShowRegister}/> }
+      {showRegister ? <Register setShowRegister={setShowRegister}/> : <Login setShowRegister={setShowRegister}/> }
     </div>
   )
 }

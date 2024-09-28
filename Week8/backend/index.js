@@ -3,10 +3,12 @@ const JWT = require("jsonwebtoken");
 const { UserModel, CourseModel, AdminModel } = require("./db");
 const bcrypt = require("bcrypt");
 const { z } = require("zod");
+const cors = require("cors");
 const e = require("express");
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 // **************************** Constant values *************************
 const saltRound = 5;
@@ -80,6 +82,16 @@ async function adminAuth(req, res, next) {
 }
 
 // ***************************** User routes ********************************
+
+app.get("/user", auth, (req, res) => {
+  try{
+    const user = req.user;
+    res.json({username : user.username})
+  }
+  catch(err){
+    res.status(500).json({ error: err.message });
+  }
+})
 
 app.post("/user/signup", async (req, res) => {
   try {
