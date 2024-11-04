@@ -5,9 +5,9 @@ import { Outlet } from "react-router-dom";
 function Layout() {
   return (
     <div
-      style={{ height: "100vh", backgroundColor: "#252525", color: "white" }}
+      style={{ }}
     >
-      <div style={{height: "10%"}}>
+      <div style={{height: "5%"}}>
         <Navbar />
       </div>
 

@@ -95,3 +95,16 @@ function Signin() {
 
 export default Signin;
 ```
+
+## Week 10 Class 2
+
+### Rolling up State
+- In our react app multiple components can share the same state
+- Instead of sharing state we can use common state
+- We can roll up state to the lowest common ancestor (common parent)
+- This is a ugly way to share state and it can lead to prop drilling
+
+### Context API
+- Context API is a way to share state between components
+- It is a better way to share state between components for deeply nested components
+- [Process for creating context](https://github.com/ManikMaity/Redux-Learning/blob/main/Sanket-Sir-Redux-Offline/README.md#context-api) 
