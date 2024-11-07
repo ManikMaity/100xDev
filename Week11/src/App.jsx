@@ -3,6 +3,7 @@ import "./App.css";
 import useCounter from "./hooks/useCounter";
 import ProductCard from "./components/ProductCard";
 import usePrev from "./hooks/usePrev";
+import TypeBox from "./components/TypeBox";
 
 function App() {
   const { count, increaseCount } = useCounter();
@@ -13,6 +14,7 @@ function App() {
       <p>Count: {count}</p>
       <p>Previous Count: {prevCount}</p>
       <button onClick={increaseCount}>Increment</button>
+      <TypeBox/>
       <div style={{ display: "flex", gap: "16px" }}>
         <ProductCard />
       </div>
