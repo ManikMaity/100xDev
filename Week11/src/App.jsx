@@ -6,6 +6,10 @@ import usePrev from "./hooks/usePrev";
 import TypeBox from "./components/TypeBox";
 import Counter from "./components/Counter";
 import { RecoilRoot } from "recoil";
+import Counter2 from "./components/counterWithMemo/Counter2";
+import TodosContainer from "./components/TodosContainer";
+import Todos2Container from "./components/Todos2Container";
+import Todo2 from "./components/Todo2";
 
 function App() {
   const { count, increaseCount } = useCounter();
@@ -13,16 +17,9 @@ function App() {
 
   return (
     <RecoilRoot>
-    <div>
-      <p>Count: {count}</p>
-      <p>Previous Count: {prevCount}</p>
-      <button onClick={increaseCount}>Increment</button>
-      <TypeBox/>
-      <div style={{ display: "flex", gap: "16px" }}>
-        <ProductCard />
-      </div>
-      <Counter/>
-    </div>
+      <p>Hi</p>
+      {/* <TodosContainer /> */}
+      <Todos2Container/>
     </RecoilRoot>
   );
 }

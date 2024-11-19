@@ -230,3 +230,56 @@ export default Decrease;
 - Now when we update the value of atom it will not rerender the child or parents of components will not using the value.
 
 ### Memo API in React
+- When ever a component rerender it will rerender the child components even if the childs dont use the state.
+```jsx
+import React, { useEffect, useState } from "react";
+import CountView2 from "./CountView2";
+
+function Counter2() {
+
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCount((prevCount) => prevCount + 1);
+    }, 1000);
+    return () => clearInterval(interval);
+  });
+
+  return (
+      <CountView2/>
+  );
+}
+export default Counter2;
+```
+- In the above example the child component will rerender even if the parent component dont pass the  to child.
+- So we have to memoize the child component.
+```jsx
+const MemoizedCountView = memo(CountView2);
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: "16px", padding: "16px" }}>
+      <MemoizedCountView />
+    </div>
+  );
+```
+- Now the only the parent component will rerender if the parent component state change.
+
+### Sectors in Recoil
+- Sectors are used to manage state in Recoil.
+- Derived selectors are used to derive a value from other values in Recoil.
+- The get function derives a value from counterAtom in Recoil and returns it.
+- That value is then available in the evenSelctor selector.
+```jsx
+import { selector } from "recoil"
+import counterAtom from "../atoms/counter"
+
+const evenSelctor = selector({
+    key: "evenSelctor", // unique ID
+    get : function ({get}) {
+        const count = get(counterAtom);
+        return count % 2 === 0
+    } // get function returns the value to which the selector will be resolved
+})
+
+export default evenSelctor
+```

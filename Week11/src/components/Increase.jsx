@@ -6,7 +6,7 @@ function Increase() {
   const setCount = useSetRecoilState(counterAtom);
 
   return (
-    <button onClick={() => setCount((prevCount) => prevCount + 1)}>
+    <button onClick={() => setCount((prevCount) => prevCount + 2)}>
       Increase
     </button>
   );
