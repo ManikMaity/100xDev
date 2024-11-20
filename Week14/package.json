@@ -1,0 +1,12 @@
+{
+  "name": "week14",
+  "version": "1.0.0",
+  "description": "- Strongly Typed Languages - Typescript, Java, C#\r - Loose Typed Languages - JavaScript, Python, PHP\r - Compiled Languages - C, Java -> we write code in Java and compile it to mechine code  \r - Compliled languages are faster and while compiling check for compilation errors but not check for runtime errors\r - Compiled Languages are more secure and safe.\r - Loose Typed languages are faster and while running check for runtime errors and check for compilation errors\r - It does not have compilation steps.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
