@@ -66,3 +66,16 @@ function printAllTodo(todos) {
     });
 }
 printAllTodo(todo);
+function addTwoValue(val1, val2) {
+    if (typeof val1 === "number" && typeof val2 === "number") {
+        return val1 + val2;
+    }
+    else {
+        return val1.toString() + val2.toString();
+    }
+}
+const leader1 = {
+    name: "manik",
+    startDate: new Date(),
+    age: 23
+};

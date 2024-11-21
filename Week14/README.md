@@ -123,3 +123,110 @@ const leader1:TeamLeader = {
   startDate : new Date(),
   age : 23
 }
+```
+
+## Typescript Class  2
+
+### Interface
+- Interfaces are used to define the structure of an object.
+```ts
+interface UserInterface {
+    name: string;
+    age: number;
+    address?: {
+        city: string;
+        state: string;
+    };
+    isMarried: boolean;
+    isWorking: boolean;
+    role: string;
+}
+
+let user: UserInterface = {
+    name : "manik",
+    age : 22,
+    address : {
+        city : "kathmandu",
+        state : "nepal"
+    },
+    isMarried : false,
+    isWorking : false,
+    role : "developer"
+}
+````
+- We can make any property `optional` using `?`
+- optional property helps in partial type
+```ts
+address?: {
+        city: string;
+        state: string;
+    };
+```
+- Now this will also work without address.
+```ts
+let user2: UserInterface = {
+    name : "manik",
+    age : 22,
+    isMarried : false,
+    isWorking : false,
+    role : "developer"
+}
+```
+- We can use interface inside another interface.
+```ts
+interface Address {
+    city: string;
+    state: string;
+};
+
+interface UserInterface {
+    name: string;
+    age: number;
+    address?: Address;
+    isMarried: boolean;
+    isWorking: boolean;
+    role: string;
+}
+```
+
+### Class using interface - Inplementing interface
+- Interface and implements classses but typs cant.
+```ts
+class People2 implements People {
+    name : string;
+    age : number;
+    constructor(name : string, age : number) {
+        this.name = name;
+        this.age = age;
+        this.code = Math.floor(Math.random() * 100);
+    }
+    greet() {
+        console.log("hello " + this.name);
+    }
+}
+```
+
+### Diff between interface and type
+- In type we can make union and intersection type.
+- In interface we can cant.
+
+
+#### Intersection and Unions (| and &)
+- Intersection is a combination of two or more types with `&`.
+```ts
+type CollegeStrudent = Student & Teacher;
+```
+- Union is a combination of two or more types with `|`.
+```ts
+type CollegeStrudent = Student | Teacher;
+```
+
+#### Array Types
+- To make array type we use `[]`.
+```ts
+type StringArray = string[];
+type NumberArray = number[];
+type MixedArray = (string | number)[];
+```
+- Why union is called intersection in typeScript?
+- [Ans](https://www.reddit.com/r/typescript/comments/1e61bla/demystifying_intersection_and_union_types_in/)
