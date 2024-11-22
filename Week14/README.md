@@ -230,3 +230,106 @@ type MixedArray = (string | number)[];
 ```
 - Why union is called intersection in typeScript?
 - [Ans](https://www.reddit.com/r/typescript/comments/1e61bla/demystifying_intersection_and_union_types_in/)
+
+### Pick
+- Pick is used to select a subset of properties from a type.
+- `Pick` let us to pick value from another type.
+- If we want to make a type from another type then we can use Pick
+- This way when any type change in main type it will chnage in Pick type
+
+```ts
+interface DBUser {
+    _id : string;
+    username : string;
+    email : string;
+    password : string;
+    name : string;
+}
+
+type DBUpdate= Pick<DBUser, "name" | "email"| "password">
+
+
+function updateUser (updatedValues : DBUpdate){
+    console.log("User is updated")
+}
+```
+### Partial(?)
+- It will make the properties of the type optional
+```ts
+type updateUserOptional = Partial<DBUpdate>;
+// same as
+type updateUserOptional = {
+    name?: string | undefined;
+    email?: string | undefined;
+    password?: string | undefined;
+}
+```
+
+### Readonly
+- It will make the properties of the type readonly.
+- In js or ts we can change the value inside the object or array even with const.
+```ts
+// this will not throw error
+const familyNames = ["manik", "suman", "malati"];
+familyNames[0] = "Swapan";
+```
+- To make the the object or array readonly we use `Readonly` so noone can change the value.
+#### readonly
+- `readonly` is used to make a property readonly.
+```ts
+type FamilyMembers = {
+    name : string,
+    age : number,
+    readonly relation : string,
+    address : string
+}
+```
+#### Readonly
+- `Readonly` is used to make a whole object readonly.
+```ts
+const swapan : Readonly<FamilyMembers> = {
+    name : "Swapan",
+    age : 40,
+    relation : "father",
+    address : "Kolkata"
+}
+```
+
+### Record and Map
+- Record is used to create a type that maps keys to values pair in objects.
+```ts
+type UserKeyValuePairType = Record<string, keyValueType>;
+
+const userKeyValuePair : UserKeyValuePairType = {
+  "user@125" : {
+    name : "manik",
+    age : 22
+  },
+  "user@126" : {
+    name : "suman",
+    age : 22
+  }
+}
+```
+
+### Infer Type in zod
+- Infer type is used to infer the type of a variable from the zod schema we created for it.
+```ts
+const stringValue = z.object({
+  name: z.string(),
+});
+
+type StringValue = z.infer<typeof stringValue>;
+
+const userBody : UserBodyType = req.body;
+  const sucess = userSchema.safeParse(userBody);
+  if (!sucess) {
+    res.status(400).json({
+      sucess: false,
+    });
+  }
+  res.status(200).json({
+    sucess: true,
+  });
+});
+```

@@ -105,7 +105,6 @@ function filterIllielUser(users) {
             filteredUsers.push(users[i]);
         }
     }
-    console.table(filteredUsers);
     return filteredUsers;
 }
 const appUsers = [
