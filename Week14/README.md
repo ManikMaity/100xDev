@@ -1,5 +1,25 @@
 # TypeScript 
 
+## Index 
+- [TypeScript Class 1](#typescript-class-1)
+- [Strongly Typed Languages vs Loose Typed Languages](#strongly-typed-languages-vs-loose-typed-languages)
+- [TypeScript](#typescript)
+- [Process of creating typescript project](#process-of-creating-typescript-project)
+- [Type Inference](#type-inference)
+- [Any Type](#any-type)
+- [Callback fn type](#callback-fn-type)
+- [TS Config](#ts-config)
+- [Type Alias](#type-alias)
+- [Interface](#interface)
+- [Class using interface - Inplementing interface](#class-using-interface-inplementing-interface)
+- [Difference between interface and type](#difference-between-interface-and-type)
+- [Pick](#pick)
+- [Partial](#partial)
+- [Readonly](#readonly)
+- [Record and Map](#record-and-map)
+- [Infer Type in zod](#infer-type-in-zod)
+
+
 ## TypeScript Class  1
 
 ## Strongly Typed Languages vs Loose Typed Languages
