@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { InferSchemaType, Schema } from "mongoose";
 
 const userSchema = new Schema({
   username: {
@@ -14,7 +14,9 @@ const userSchema = new Schema({
     type: String,
     required: [true, "Password is required"],
   },
-});
+}, {timestamps : true});
+
+export type MongooseUserType = InferSchemaType<typeof userSchema>
 
 
 const UserModel = mongoose.model("User", userSchema);
