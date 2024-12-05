@@ -8,6 +8,7 @@ const ws_1 = require("ws");
 const server_config_1 = require("./config/server.config");
 const express_1 = __importDefault(require("express"));
 const functions_1 = require("./utils/functions");
+const resposneMessage_1 = require("./config/resposneMessage");
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 const server = (0, http_1.createServer)(app);
@@ -19,33 +20,35 @@ wss.on("connection", (socket) => {
         const parsedMessage = JSON.parse(message.toString());
         if (parsedMessage.type === "join") {
             if (!((_a = parsedMessage === null || parsedMessage === void 0 ? void 0 : parsedMessage.payload) === null || _a === void 0 ? void 0 : _a.roomId)) {
-                socket.send((0, functions_1.createResponseMessage)(false, "Room id is required"));
+                socket.send((0, functions_1.createResponseMessage)(false, resposneMessage_1.ERROR_MESSAGE, { message: "Room id is required" }));
                 return;
             }
             const exit = allSockets.find((user) => user.socket === socket);
             if (exit) {
                 if (exit.room == parsedMessage.payload.roomId) {
-                    socket.send((0, functions_1.createResponseMessage)(false, `You are already in room ${exit.room}`));
+                    socket.send((0, functions_1.createResponseMessage)(false, resposneMessage_1.ERROR_MESSAGE, { messaege: `You are already in room ${exit.room}` }));
                     return;
                 }
                 const filtered = allSockets.filter((user) => user.socket !== socket);
                 allSockets = filtered;
             }
             allSockets.push({ socket, room: parsedMessage.payload.roomId });
-            socket.send((0, functions_1.createResponseMessage)(true, `Joined room ${parsedMessage.payload.roomId}`, parsedMessage.payload));
+            socket.send((0, functions_1.createResponseMessage)(true, resposneMessage_1.JOIN_MESSAGE, { message: `Joined room ${parsedMessage.payload.roomId}` }));
         }
         if (parsedMessage.type === "chat") {
             if (!((_b = parsedMessage === null || parsedMessage === void 0 ? void 0 : parsedMessage.payload) === null || _b === void 0 ? void 0 : _b.message)) {
-                socket.send((0, functions_1.createResponseMessage)(false, "Message is required"));
+                socket.send((0, functions_1.createResponseMessage)(false, resposneMessage_1.ERROR_MESSAGE, { message: "Message is required" }));
                 return;
             }
             const user = allSockets.find((user) => user.socket === socket);
             if (!user) {
-                socket.send((0, functions_1.createResponseMessage)(false, "You are not in a room"));
+                socket.send((0, functions_1.createResponseMessage)(false, resposneMessage_1.ERROR_MESSAGE, { message: "You are not in a room" }));
             }
             const usersInRoom = allSockets.filter((other) => (user === null || user === void 0 ? void 0 : user.room) === other.room);
             usersInRoom.forEach((user) => {
-                user.socket.send((0, functions_1.createResponseMessage)(true, "Chat", parsedMessage.payload));
+                user.socket.send((0, functions_1.createResponseMessage)(true, resposneMessage_1.CHAT_MESSAGE, {
+                    message: parsedMessage.payload.message,
+                }));
             });
         }
     });
@@ -54,7 +57,7 @@ wss.on("connection", (socket) => {
         if (exit) {
             const filtered = allSockets.filter((user) => user.socket !== socket);
             allSockets = filtered;
-            socket.send((0, functions_1.createResponseMessage)(true, `Left room ${exit.room}`));
+            socket.send((0, functions_1.createResponseMessage)(true, resposneMessage_1.LEAVE_MESSAGE, { message: `Left room ${exit.room}` }));
         }
     });
 });

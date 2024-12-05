@@ -3,6 +3,7 @@ import { WebSocketServer, WebSocket } from "ws";
 import { PORT } from "./config/server.config";
 import express from "express";
 import { createResponseMessage } from "./utils/functions";
+import { CHAT_MESSAGE, ERROR_MESSAGE, JOIN_MESSAGE, LEAVE_MESSAGE } from "./config/resposneMessage";
 
 const app = express();
 app.use(express.json());
@@ -24,14 +25,14 @@ wss.on("connection", (socket) => {
 
     if (parsedMessage.type === "join") {
       if (!parsedMessage?.payload?.roomId) {
-        socket.send(createResponseMessage(false, "Room id is required"));
+        socket.send(createResponseMessage(false, ERROR_MESSAGE, {message: "Room id is required"}));
         return;
       }
       const exit = allSockets.find((user) => user.socket === socket);
       if (exit) {
         if (exit.room == parsedMessage.payload.roomId) {
           socket.send(
-            createResponseMessage(false, `You are already in room ${exit.room}`)
+            createResponseMessage(false, ERROR_MESSAGE, { messaege: `You are already in room ${exit.room}`})
           );
           return;
         }
@@ -42,21 +43,21 @@ wss.on("connection", (socket) => {
       socket.send(
         createResponseMessage(
           true,
-          `Joined room ${parsedMessage.payload.roomId}`,
-          parsedMessage.payload
+          JOIN_MESSAGE,
+          {message: `Joined room ${parsedMessage.payload.roomId}`}
         )
       );
     }
 
     if (parsedMessage.type === "chat") {
       if (!parsedMessage?.payload?.message) {
-        socket.send(createResponseMessage(false, "Message is required"));
+        socket.send(createResponseMessage(false, ERROR_MESSAGE, {message: "Message is required"}));
         return;
       }
 
       const user = allSockets.find((user) => user.socket === socket);
       if (!user) {
-        socket.send(createResponseMessage(false, "You are not in a room"));
+        socket.send(createResponseMessage(false, ERROR_MESSAGE, {message : "You are not in a room"}));
       }
 
       const usersInRoom = allSockets.filter(
@@ -65,7 +66,9 @@ wss.on("connection", (socket) => {
 
       usersInRoom.forEach((user) => {
         user.socket.send(
-          createResponseMessage(true, "Chat", parsedMessage.payload)
+          createResponseMessage(true, CHAT_MESSAGE, {
+            message: parsedMessage.payload.message,
+          })
         );
       });
     }
@@ -77,7 +80,7 @@ wss.on("connection", (socket) => {
       const filtered = allSockets.filter((user) => user.socket !== socket);
       allSockets = filtered;
       socket.send(
-        createResponseMessage(true, `Left room ${exit.room}`)
+        createResponseMessage(true, LEAVE_MESSAGE, {message : `Left room ${exit.room}`})
       );
     }
   });
