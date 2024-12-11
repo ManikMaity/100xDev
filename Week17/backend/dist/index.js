@@ -18,12 +18,45 @@ const db_config_1 = __importDefault(require("./config/db.config"));
 const user_repo_1 = require("./repositories/user.repo");
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
+app.post("/address", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { user_id, city, country, street, pincode } = req.body;
+        console.log(user_id, city, country, street, pincode);
+        const response = yield (0, user_repo_1.createAddress)(user_id, city, country, street, pincode);
+        res.json({
+            message: "Address created successfully",
+            data: response
+        });
+    }
+    catch (error) {
+        res.status(500).json({
+            message: "Error creating user",
+            error: error
+        });
+    }
+}));
 app.post("/signup", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { username, password, email } = req.body;
-        const response = yield (0, user_repo_1.createUser)(username, password, email);
+        const { username, password, email, city, country, street, pincode } = req.body;
+        const response = yield (0, user_repo_1.createUser)(username, password, email, city, country, street, pincode);
         res.json({
             message: "User created successfully",
+            data: response
+        });
+    }
+    catch (error) {
+        res.status(500).json({
+            message: "Error creating user",
+            error: error
+        });
+    }
+}));
+app.get("/metadata", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userid = req.query.userid;
+        const response = yield (0, user_repo_1.getUserDataJoin)(userid);
+        res.json({
+            message: "User fetched successfully",
             data: response
         });
     }
