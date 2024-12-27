@@ -17,3 +17,4 @@
 - [Web Sockets, wb | Week 16](./Week16/README.md)
 - [Postgres, SQL DB, Relationships, Transactions, Joins and its Types | Week 17](./Week17/README.md)
 - [ORM, Prisma, Model, Connect Postgres, Relationship | Week 18](./Week18/README.md)
+- [Nextjs, SSR, layout, page, api, data fetching](./Week19/README.md)
