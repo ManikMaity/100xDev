@@ -8,6 +8,7 @@
 - [Catch all routes [...rest]](#catch-all-routes)
 - [Catch all [[...all]]](#catch-all)
 - [Static Site Generation](#static-site-generation)
+- [Hydration](#hydration)
 
 ### Dynamic Routing
 
