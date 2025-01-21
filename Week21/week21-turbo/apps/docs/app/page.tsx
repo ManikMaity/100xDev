@@ -1,6 +1,7 @@
 import Image, { type ImageProps } from "next/image";
 import { Button } from "@repo/ui/button";
 import styles from "./page.module.css";
+import { TextInput } from "@repo/ui/textInput";
 
 type Props = Omit<ImageProps, "src"> & {
   srcLight: string;
@@ -31,6 +32,7 @@ export default function Home() {
           height={38}
           priority
         />
+        <TextInput className="h-12"/>
         <ol>
           <li>
             Get started by editing <code>apps/docs/app/page.tsx</code>
