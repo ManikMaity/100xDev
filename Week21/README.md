@@ -43,3 +43,46 @@ npx create-turbo@latest
 // Reusing button from ui
 import { Button } from "@repo/ui/button";
 ```
+
+## Create new component in ui
+- If we create a new component in ui, like textInput.tsx.
+- We have to define the name inside package.json
+```json
+ "exports": {
+    "./button": "./src/button.tsx",
+    "./card": "./src/card.tsx",
+    "./code": "./src/code.tsx",
+    "./textInput" : "./src/textInput.tsx" // ./textInput name can be anything
+  },
+```
+- After that we can import it in web and docs.
+
+```tsx
+import { TextInput } from "@repo/ui/textInput";
+```
+
+## `turbo.json` file
+```json
+tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "outputs": [".next/**", "!.next/cache/**"]
+    },
+```
+- deendOn means that it will build when build is called. It will build the ui first.
+- inputs means that it will build when any of these files are changed.
+- outputs means it will cache the `.next` (output folder) folder except cache folder.
+- So if we delete the .next folder, and run `turbo build`, it will get the  .next from cache folder.
+- If we want to do the same for `dest` folder of the express, we have to add a `turbo.json` file in the root folder of the express server.
+- Have to extend the original `turbo.json` file.
+- ```json
+{
+    "extends": ["//"],
+    "tasks": {
+      "build": {
+        "outputs": ["dist/**"]
+      }
+    }
+  }
+```
